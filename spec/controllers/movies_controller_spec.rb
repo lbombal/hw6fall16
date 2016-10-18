@@ -21,4 +21,16 @@ describe MoviesController do
       expect(assigns(:movies)).to eq(fake_results)
     end 
   end
+  describe 'adding to Rotten Potatoes' do
+    it 'should call create_from_tmdb for each checked box' do
+      expect(Movie).to receive(:create_from_tmdb).with('72105')
+      expect(Movie).to receive(:create_from_tmdb).with('214756')
+      post :add_tmdb, {:tmdb_movies =>{"72105"=>"1", "214756"=>"1"}}
+    end
+    it 'redirect to the movie_path' do
+      allow(Movie).to receive(:create_from_tmdb)
+      post :add_tmdb, {:tmdb_movies =>{"72105"=>"1", "214756"=>"1"}}
+      expect(response).to redirect_to('/movies')
+    end
+  end
 end

@@ -62,7 +62,18 @@ class MoviesController < ApplicationController
   end
   
   def search_tmdb
+   
     @movies=Movie.find_in_tmdb(params[:search_terms])
+    
+    
   end
+  def add_tmdb
 
+    tmdb_ids = params[:tmdb_movies].keys
+    tmdb_ids.each{|id|
+      Movie.create_from_tmdb(id)
+    }
+    flash[:notice] = "movies were successfully added."
+    redirect_to movies_path
+  end
 end
