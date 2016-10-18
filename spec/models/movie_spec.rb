@@ -20,4 +20,10 @@ describe Movie do
       end
     end
   end
+  describe 'adding Tmdb movie to database' do
+    it 'should add the movie to the database' do
+      
+      expect {Movie.create_from_tmdb("72105")}.to change{Movie.count}
+    end
+  end
 end
